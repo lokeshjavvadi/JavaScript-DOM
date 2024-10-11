@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+           
+            text-align: center;
+            align-content: center;
+            
+            margin: 0;
+            padding: 20px;
+            background-image: url("https://wmo.int/sites/default/files/styles/featured_image_x1_768x512/public/2023-12/thumbnails_5.jpg?h=d1cb525d&itok=aZ4qUGTc");
+            background-size:cover;
+        }
+        #weather {
+            background-color: #efef3d98;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgb(9, 255, 1);
+            display: inline-block;
+        }
+        p{
+            color: rgb(255, 0, 221);
+            text-shadow: 1px 1px 2px rgb(0, 0, 0);
+        }
+        h1 {
+            color: #d20000ec;
+        }
+        .gene{
+            color: rgb(55, 0, 255);
+            text-shadow: 1px 1px 2px rgb(255, 255, 255);
+            font-size: larger;
+        }
+    </style>
+</head>
+<body>
+
+    <h1><button style="border: 0; background-color:rgba(0, 255, 0, 0.404)" id="button"><h1>Current Weather</h1></button></h1>
+    <div id="weather">Loading...</div>
+
+    <div id="gen"></div>
+
+    <script>
+        const weatherDiv = document.getElementById('weather');
+fetch('https://api.open-meteo.com/v1/forecast?latitude=35.6895&longitude=139.6917&current_weather=true')
+            .then(response => response.json())
+            .then(data => {
+                const temperature = data.current_weather.temperature;
+                const wcode = data.current_weather.weathercode; 
+                const wspeed = data.current_weather.windspeed;
+                const time = data.current_weather.time;
+                const interval = data.current_weather.interval;
+                const winddirec=data.current_weather.winddirection;
+
+                const tunits=data.current_weather_units.temperature;
+                const int=data.current_weather_units.interval;
+                const sp=data.current_weather_units.windspeed;
+                const timeu=data.current_weather_units.time;
+                const dir=data.current_weather_units.winddirection;
+                const wc=data.current_weather_units.weathercode;
+
+                weatherDiv.innerHTML = `
+                    <p class="a">Temperature: ${temperature} ${tunits}</p>
+                    <p class="b">Weather Code: ${wcode} ${wc}</p>
+                    <p class="c">Wind Speed: ${wspeed} ${sp}</p>
+                    <p class="d">Time: ${time} ${timeu}</p>
+                    <p class="e"> Interval: ${interval} ${int}</p>
+                    <p class="f"> Wind-Direction: ${winddirec} ${dir}</p>
+                `;
+            })
+          
+
+
+            
+            fetch('https://api.open-meteo.com/v1/forecast?latitude=35.6895&longitude=139.6917&current_weather=true')
+            .then(response => response.json())
+            .then(data =>{
+                const genc=data.generationtime_ms;
+                document.getElementById("gen").innerHTML=`<p class="gene">Generation Time${genc}<p>`;
+
+
+
+
+
+            })
+  
+
+
+      
+    </script>
+
+</body>
+</html>

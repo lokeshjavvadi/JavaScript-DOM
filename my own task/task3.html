@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            align-items: center;
+            text-align: center;
+            background-image: url("https://img.freepik.com/premium-photo/grainy-gradient-background-red-white-blue-colors-with-soft-faded-watercolor-border-texture_927344-24167.jpg");
+            
+            background-size:100vw 100vh;
+        }
+    .id{
+        
+        align-content: center;
+        text-align: center;
+
+    }
+    .id{
+        font-size: larger;
+        border: 3px red solid;
+        display: inline-block;
+        padding: 50px;
+        border-radius: 20px;
+        box-shadow:2px 3px 100px rgb(255, 213, 0);
+       
+    }
+    #name{
+font-size: xx-large;
+color: greenyellow;
+    }
+    .but> button{
+        background-color: aqua;
+        border: 0cap;
+        font-size: 40px;
+    }
+
+    .id>div{
+        color: rgb(30, 0, 128);
+        font-size: larger;
+        text-shadow:1px 1px 1px rgb(0, 0, 0);
+    }
+
+</style>
+</head>
+<body>
+<br><br>
+    <div class="but">
+        <button id="refresh"> Click Here to see  Your New Friend</button>
+    </div>
+    <br>
+    <div class="id">
+        <div id="l" style="color: white;">Loading......</div>
+        <div id="name" ></div>
+        <br>
+        <div id="img"></div>
+        <br>
+        <div id="email"></div>
+        <div id="num"></div>
+        <div id="loc"></div>
+        <div id="gender"></div>
+        <div id="age"></div>
+        <div id="dob"></div>
+    </div>
+
+
+    <script>
+        document.getElementById("refresh").onclick = function() {
+            location.reload();
+        }
+
+        fetch("https://randomuser.me/api/").then(response=>response.json()).then(
+            data=>{
+             
+
+                let nam=data.results[0].name.title +" "+ data.results[0].name.first +" "+data.results[0].name.last;
+                document.getElementById("name").innerText=nam;
+
+                let imgg=data.results[0].picture.large;
+                let img=document.createElement('img');
+                img.src=imgg;
+                document.getElementById("img").appendChild(img)
+
+                let email=data.results[0].email;
+                document.getElementById("email").innerText=`Email : ${email}`
+
+                let loc=data.results[0].location.country;
+                document.getElementById("loc").innerText=`Location : ${loc}`
+
+                let gender=data.results[0].gender;
+                document.getElementById("gender").innerText=`Gender : ${gender}`
+
+                let age=data.results[0].dob.age;
+                document.getElementById("age").innerText=`Age : ${age}`
+
+
+                let dob=data.results[0].dob.date.slice(0,10);
+                document.getElementById("dob").innerText=`Date of Birth : ${dob}`
+
+
+                document.getElementById("l").innerText="";
+
+
+
+
+                
+            }
+        )
+    </script>
+</body>
+</html>

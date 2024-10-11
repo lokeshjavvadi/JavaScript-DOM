@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            background-image: url("https://img.freepik.com/premium-photo/grainy-gradient-background-red-white-blue-colors-with-soft-faded-watercolor-border-texture_927344-24167.jpg");
+            background-size: cover;
+            padding: 20px;
+        }
+
+        h1 {
+            color: white;
+            text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.927);
+        }
+
+        #gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .image-container {
+            position: relative;
+            
+            width: 300px;  
+            height: 200px; 
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        img:hover {
+            transform: scale(1.5); 
+        }
+       
+
+        img {
+            width: 100%;
+            height: 100%;
+          
+            transition: transform 0.3s;
+        }
+
+        .author {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            border-radius: 5px;
+            display: none; 
+        }
+
+        .image-container:hover .author {
+            display: block; 
+            
+        }
+
+        #loading {
+            color: white;
+            font-size: larger;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Gallery</h1>
+    <div id="loading">Loading images...</div>
+    <div id="gallery"></div>
+
+    <script>
+        fetch('https://picsum.photos/v2/list?page=1&limit=10')
+            .then(response => response.json())
+            .then(images => {
+                displayImages(images);
+            })
+
+        function displayImages(images) {
+            const gallery = document.getElementById('gallery');
+            const loading = document.getElementById('loading');
+            loading.style.display = 'none';  
+
+            images.forEach(image => {
+                const container = document.createElement('div');
+                container.className = 'image-container';
+
+                const imgElement = document.createElement('img');
+                imgElement.src = image.download_url;
+                imgElement.alt = image.author;
+
+                const authorElement = document.createElement('div');
+                authorElement.className = 'author';
+                authorElement.innerText = image.author;
+
+                container.appendChild(imgElement);
+                container.appendChild(authorElement);
+                gallery.appendChild(container);
+            });
+        }
+    </script>
+</body>
+</html>
+
